@@ -1,0 +1,33 @@
+name: "PR Review Agent"
+description: "Runs the multi-agent PR review bot against the current PR diff."
+runs:
+  using: "composite"
+  steps:
+    - name: Compute diff against base ref
+      shell: bash
+      run: |
+        git fetch origin "${{ github.event.pull_request.base.ref }}" --depth=1
+        git diff "origin/${{ github.event.pull_request.base.ref }}"...HEAD > pr.diff
+
+    - name: Install uv
+      uses: astral-sh/setup-uv@v3
+
+    - name: Sync workspace
+      shell: bash
+      run: uv sync
+
+    - name: Run review
+      shell: bash
+      run: uv run agent review --diff-file pr.diff --trace-out trace.json --comment-out comment.md
+
+    - name: Post PR comment
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: gh pr comment "${{ github.event.pull_request.number }}" --body-file comment.md
+
+    - name: Upload trace artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: pr-review-trace
+        path: trace.json
