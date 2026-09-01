@@ -11,6 +11,9 @@ dependencies = [
     "click>=8.1",
 ]
 
+[project.scripts]
+agent = "agent.cli:cli"
+
 [tool.uv.sources]
 trace-schema = { workspace = true }
 
