@@ -13,13 +13,13 @@ def check_gate(current: AggregateReport, history: list[HistoryEntry]) -> GateRes
     if not history:
         return GateResult(passed=True, reason="no baseline yet; recording first result")
 
-    baseline = history[-1].report
-    if current.pass_rate >= baseline.pass_rate:
+    best_prior_pass_rate = max(entry.report.pass_rate for entry in history)
+    if current.pass_rate >= best_prior_pass_rate:
         return GateResult(
             passed=True,
-            reason=f"pass rate {current.pass_rate} >= baseline {baseline.pass_rate}",
+            reason=f"pass rate {current.pass_rate} >= best prior pass rate {best_prior_pass_rate}",
         )
     return GateResult(
         passed=False,
-        reason=f"pass rate regressed: {current.pass_rate} < baseline {baseline.pass_rate}",
+        reason=f"pass rate regressed: {current.pass_rate} < best prior pass rate {best_prior_pass_rate}",
     )

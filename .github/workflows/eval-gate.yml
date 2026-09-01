@@ -1,5 +1,12 @@
 name: Eval Gate
 
+# docs/results/history.json is the checked-in baseline for the gate. It is
+# currently promoted manually (e.g. by re-running the Task 11 procedure and
+# committing the updated file) rather than auto-updated by CI. This is an
+# intentional scope boundary: an automated workflow silently pushing new
+# baselines back to the branch would be a deliberate design decision, not a
+# bug-fix-pass change.
+
 on:
   push:
     branches: [main]
@@ -21,7 +28,7 @@ jobs:
         run: |
           uv run harness gate \
             --testcases-dir testcases \
-            --history-path history.json \
+            --history-path docs/results/history.json \
             --report-out report.html \
             --commit-sha "${{ github.sha }}"
 
@@ -32,4 +39,4 @@ jobs:
           name: eval-report
           path: |
             report.html
-            history.json
+            docs/results/history.json

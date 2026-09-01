@@ -24,3 +24,16 @@ def test_gate_fails_on_regression():
     assert result.passed is False
     assert "0.5" in result.reason
     assert "0.75" in result.reason
+
+
+def test_gate_does_not_ratchet_down_after_regression_is_appended():
+    # A regression is appended to history (as append_history unconditionally
+    # does), but the bar for future runs must stay at the best prior pass
+    # rate, not drop to the regressed value.
+    history = [
+        HistoryEntry(commit_sha="a", timestamp="t1", report=_report(0.75)),
+        HistoryEntry(commit_sha="b", timestamp="t2", report=_report(0.5)),  # regressed run, still appended
+    ]
+    result = check_gate(_report(0.75), history)
+    assert result.passed is True
+    assert "0.75" in result.reason
