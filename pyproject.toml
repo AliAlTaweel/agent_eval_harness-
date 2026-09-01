@@ -1,0 +1,2 @@
+[tool.uv.workspace]
+members = ["trace_schema", "agent", "harness"]
