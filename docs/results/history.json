@@ -1,0 +1,13 @@
+[
+  {
+    "commit_sha": "1fcdb8b3f54cffc825bcefd98b9c9e8ac7e4da84",
+    "timestamp": "2026-09-01T18:54:15.217099+00:00",
+    "report": {
+      "pass_rate": 0.6666666666666666,
+      "avg_hallucination_rate": 0.5,
+      "avg_cost_usd": 0.0,
+      "avg_latency_seconds": 11.518655,
+      "total_cases": 6
+    }
+  }
+]
