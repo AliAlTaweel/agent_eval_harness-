@@ -1,3 +1,7 @@
+# Requires a self-hosted GitHub Actions runner with Ollama installed and the
+# `qwen2.5:7b` model pulled (`ollama pull qwen2.5:7b`). GitHub-hosted runners
+# cannot reach a local Ollama instance, so `runs-on: self-hosted` below is
+# required, not a stylistic choice. See the repo README for setup details.
 name: PR Review
 
 on:
