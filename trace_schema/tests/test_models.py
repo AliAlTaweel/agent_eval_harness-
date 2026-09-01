@@ -1,6 +1,6 @@
 from datetime import datetime, timezone
 
-from trace_schema.models import ToolCall, Step
+from trace_schema.models import ToolCall, Step, RunTrace
 
 
 def test_tool_call_round_trip():
@@ -27,3 +27,42 @@ def test_step_round_trip():
     restored = Step.model_validate(data)
     assert restored == step
     assert restored.tool_calls[0].name == "grep"
+
+
+def test_run_trace_round_trip():
+    now = datetime.now(timezone.utc)
+    step = Step(
+        agent_name="security_review",
+        action="analyze_diff",
+        started_at=now,
+        ended_at=now,
+    )
+    trace = RunTrace(
+        run_id="run-123",
+        input={"diff": "..."},
+        steps=[step],
+        final_output={"verdict": "approve"},
+        started_at=now,
+        ended_at=now,
+        total_tokens=200,
+        total_cost_usd=0.0,
+    )
+    data = trace.model_dump()
+    restored = RunTrace.model_validate(data)
+    assert restored == trace
+    assert restored.schema_version == "1.0.0"
+
+
+def test_run_trace_defaults_schema_version():
+    now = datetime.now(timezone.utc)
+    trace = RunTrace(
+        run_id="run-1",
+        input=None,
+        steps=[],
+        final_output=None,
+        started_at=now,
+        ended_at=now,
+        total_tokens=0,
+        total_cost_usd=0.0,
+    )
+    assert trace.schema_version == "1.0.0"
