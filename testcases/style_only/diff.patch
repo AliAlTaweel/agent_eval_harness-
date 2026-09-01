@@ -1,0 +1,7 @@
+--- a/app/format.py
++++ b/app/format.py
+@@ -1,4 +1,4 @@
+-def formatName(first,last):
+-  return first+" "+last
++def format_name(first, last):
++    return first + " " + last

@@ -1,0 +1,5 @@
+--- a/app/templates.py
++++ b/app/templates.py
+@@ -5,6 +5,6 @@ def render_comment(comment_text):
+-    return f"<div>{escape(comment_text)}</div>"
++    return f"<div>{comment_text}</div>"
