@@ -2,6 +2,6 @@
 members = ["trace_schema", "agent", "harness"]
 
 [tool.pytest.ini_options]
-testpaths = ["trace_schema/tests", "agent/tests"]
+testpaths = ["trace_schema/tests", "agent/tests", "harness/tests"]
 addopts = "--import-mode=importlib"
 markers = ["integration: requires a running local Ollama"]
