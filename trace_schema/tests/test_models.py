@@ -1,6 +1,9 @@
 from datetime import datetime, timezone
 
-from trace_schema.models import ToolCall, Step, RunTrace
+import pytest
+from pydantic import ValidationError
+
+from trace_schema.models import SCHEMA_VERSION, ToolCall, Step, RunTrace
 
 
 def test_tool_call_round_trip():
@@ -50,7 +53,7 @@ def test_run_trace_round_trip():
     data = trace.model_dump()
     restored = RunTrace.model_validate(data)
     assert restored == trace
-    assert restored.schema_version == "1.0.0"
+    assert restored.schema_version == SCHEMA_VERSION
 
 
 def test_run_trace_defaults_schema_version():
@@ -65,4 +68,59 @@ def test_run_trace_defaults_schema_version():
         total_tokens=0,
         total_cost_usd=0.0,
     )
-    assert trace.schema_version == "1.0.0"
+    assert trace.schema_version == SCHEMA_VERSION
+
+
+def test_run_trace_json_round_trip():
+    now = datetime.now(timezone.utc)
+    step = Step(
+        agent_name="security_review",
+        action="analyze_diff",
+        tool_calls=[ToolCall(name="grep", args={"pattern": "eval("}, result=[])],
+        output={"issues": []},
+        started_at=now,
+        ended_at=now,
+        tokens_in=120,
+        tokens_out=45,
+        cost_usd=0.0,
+    )
+    trace = RunTrace(
+        run_id="run-123",
+        input={"diff": "..."},
+        steps=[step],
+        final_output={"verdict": "approve"},
+        started_at=now,
+        ended_at=now,
+        total_tokens=200,
+        total_cost_usd=0.0,
+    )
+    restored = RunTrace.model_validate_json(trace.model_dump_json())
+    assert restored == trace
+
+
+def test_run_trace_rejects_naive_datetime():
+    naive_now = datetime.now()
+    aware_now = datetime.now(timezone.utc)
+    with pytest.raises(ValidationError):
+        RunTrace(
+            run_id="run-naive",
+            input=None,
+            steps=[],
+            final_output=None,
+            started_at=naive_now,
+            ended_at=aware_now,
+            total_tokens=0,
+            total_cost_usd=0.0,
+        )
+
+
+def test_step_rejects_naive_datetime():
+    naive_now = datetime.now()
+    aware_now = datetime.now(timezone.utc)
+    with pytest.raises(ValidationError):
+        Step(
+            agent_name="security_review",
+            action="analyze_diff",
+            started_at=naive_now,
+            ended_at=aware_now,
+        )

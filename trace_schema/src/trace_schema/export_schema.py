@@ -1,9 +1,10 @@
 import json
+from typing import Any
 
 from trace_schema.models import RunTrace
 
 
-def run_trace_json_schema() -> dict:
+def run_trace_json_schema() -> dict[str, Any]:
     return RunTrace.model_json_schema()
 
 
