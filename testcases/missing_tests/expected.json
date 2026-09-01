@@ -1,5 +1,6 @@
 {
   "verdict": "request_changes",
   "expected_tool_agents": ["security_review", "style_review", "test_coverage", "merge"],
-  "min_security_issues": 0
+  "min_security_issues": 0,
+  "expected_test_coverage_gap": true
 }
