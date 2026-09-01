@@ -19,6 +19,21 @@ TEMPLATE = Template(
     <tr><th>Total cases</th><td>{{ current.total_cases }}</td></tr>
   </table>
 
+  {% if per_case %}
+  <h2>Per-Case Results</h2>
+  <table border="1" cellpadding="4">
+    <tr><th>Case</th><th>Result</th><th>Hallucination rate</th><th>Latency (s)</th></tr>
+    {% for case in per_case %}
+    <tr>
+      <td>{{ case.name }}</td>
+      <td>{{ "pass" if case.task_success else "fail" }}</td>
+      <td>{{ case.hallucination_rate }}</td>
+      <td>{{ case.latency_seconds }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% endif %}
+
   <h2>Trend</h2>
   {% if history %}
   <table border="1" cellpadding="4">
@@ -41,5 +56,9 @@ TEMPLATE = Template(
 )
 
 
-def render_html_report(current: AggregateReport, history: list[HistoryEntry]) -> str:
-    return TEMPLATE.render(current=current, history=history)
+def render_html_report(
+    current: AggregateReport,
+    history: list[HistoryEntry],
+    per_case: list[dict] | None = None,
+) -> str:
+    return TEMPLATE.render(current=current, history=history, per_case=per_case)
