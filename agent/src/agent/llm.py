@@ -27,8 +27,8 @@ class OllamaClient:
         )
         parsed = response_model.model_validate_json(response["message"]["content"])
         usage = LlmUsage(
-            tokens_in=response.get("prompt_eval_count", 0),
-            tokens_out=response.get("eval_count", 0),
+            tokens_in=response.prompt_eval_count or 0,
+            tokens_out=response.eval_count or 0,
         )
         return parsed, usage
 

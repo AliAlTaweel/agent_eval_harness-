@@ -1,6 +1,7 @@
 from trace_schema import ToolCall
 
 from agent.llm import LlmUsage
+from agent.schemas import Issue, SecurityFindings
 from agent.tracing import TraceRecorder
 
 
@@ -34,3 +35,21 @@ def test_record_stores_tool_calls():
     recorder.record("security_review", "search", fake_call, tool_calls=tool_calls)
 
     assert recorder.steps[0].tool_calls == tool_calls
+
+
+def test_record_serializes_pydantic_model_output_as_dict():
+    recorder = TraceRecorder()
+
+    findings = SecurityFindings(
+        issues=[Issue(file="a.py", line=1, description="sqli", severity="critical")]
+    )
+
+    def fake_call():
+        return findings, LlmUsage(tokens_in=3, tokens_out=4)
+
+    output = recorder.record("security_review", "analyze_diff", fake_call)
+
+    assert output is findings
+    step = recorder.steps[0]
+    assert isinstance(step.output, dict)
+    assert step.output == findings.model_dump(mode="json")

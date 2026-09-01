@@ -47,26 +47,42 @@ def _build_graph(client, recorder: TraceRecorder):
     return graph.compile()
 
 
-def run_review(diff: str, client) -> tuple[Verdict, RunTrace]:
-    recorder = TraceRecorder()
-    compiled = _build_graph(client, recorder)
+class ReviewFailedError(RuntimeError):
+    """Raised when a review node fails; carries whatever trace was captured before the failure."""
 
-    started_at = datetime.now(timezone.utc)
-    final_state = compiled.invoke({"diff": diff})
+    def __init__(self, cause: BaseException, trace: RunTrace):
+        super().__init__(str(cause))
+        self.trace = trace
+
+
+def _build_trace(diff: str, recorder: TraceRecorder, started_at: datetime, final_output: dict | None) -> RunTrace:
     ended_at = datetime.now(timezone.utc)
-
-    verdict: Verdict = final_state["verdict"]
-    steps = recorder.steps
+    steps = sorted(recorder.steps, key=lambda s: s.started_at)
     total_tokens = sum(s.tokens_in + s.tokens_out for s in steps)
 
-    trace = RunTrace(
+    return RunTrace(
         run_id=str(uuid.uuid4()),
         input={"diff": diff},
         steps=steps,
-        final_output=verdict.model_dump(),
+        final_output=final_output,
         started_at=started_at,
         ended_at=ended_at,
         total_tokens=total_tokens,
         total_cost_usd=sum(s.cost_usd for s in steps),
     )
+
+
+def run_review(diff: str, client) -> tuple[Verdict, RunTrace]:
+    recorder = TraceRecorder()
+    compiled = _build_graph(client, recorder)
+
+    started_at = datetime.now(timezone.utc)
+    try:
+        final_state = compiled.invoke({"diff": diff})
+    except Exception as exc:
+        partial_trace = _build_trace(diff, recorder, started_at, {"error": str(exc)})
+        raise ReviewFailedError(exc, partial_trace) from exc
+
+    verdict: Verdict = final_state["verdict"]
+    trace = _build_trace(diff, recorder, started_at, verdict.model_dump(mode="json"))
     return verdict, trace

@@ -1,8 +1,9 @@
 import json
+import sys
 
 import click
 
-from agent.graph import run_review
+from agent.graph import ReviewFailedError, run_review
 from agent.llm import OllamaClient
 from agent.render import render_comment
 
@@ -18,10 +19,17 @@ def cli():
 @click.option("--comment-out", default="comment.md", type=click.Path(), help="Where to write the markdown PR comment.")
 @click.option("--model", default="qwen2.5:7b", help="Ollama model to use.")
 def review(diff_file, trace_out, comment_out, model):
-    diff_text = open(diff_file).read()
+    with open(diff_file) as f:
+        diff_text = f.read()
     client = OllamaClient(model=model)
 
-    verdict, trace = run_review(diff=diff_text, client=client)
+    try:
+        verdict, trace = run_review(diff=diff_text, client=client)
+    except ReviewFailedError as exc:
+        with open(trace_out, "w") as f:
+            json.dump(exc.trace.model_dump(mode="json"), f, indent=2)
+        click.echo(f"Review failed: {exc}", err=True)
+        sys.exit(1)
 
     with open(trace_out, "w") as f:
         json.dump(trace.model_dump(mode="json"), f, indent=2)
