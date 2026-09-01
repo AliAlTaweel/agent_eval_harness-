@@ -1,0 +1,35 @@
+name: Eval Gate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  eval:
+    runs-on: self-hosted
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v3
+
+      - name: Sync workspace
+        run: uv sync
+
+      - name: Run eval gate
+        run: |
+          uv run harness gate \
+            --testcases-dir testcases \
+            --history-path history.json \
+            --report-out report.html \
+            --commit-sha "${{ github.sha }}"
+
+      - name: Upload eval report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-report
+          path: |
+            report.html
+            history.json
