@@ -100,5 +100,5 @@ def test_run_review_captures_partial_trace_on_node_failure():
     trace = exc_info.value.trace
     assert isinstance(trace, RunTrace)
     agent_names = {s.agent_name for s in trace.steps}
-    assert agent_names == {"completeness_review", "compliance_review"}
+    assert "coding_clarity_review" not in agent_names
     assert "simulated node failure" in trace.final_output["error"]

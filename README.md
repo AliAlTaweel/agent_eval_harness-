@@ -135,7 +135,10 @@ uv run harness gate-clinical-review --testcases-dir clinical_testcases \
 ```
 
 See `docs/results/clinical_report.html` for an example of the harness's
-output on this second domain.
+output on this second domain. As of the latest committed run, the agent
+passes 2/4 (50%) of the illustrative test cases; a small local 7B model
+driven by simple demo prompts can over-flag or under-flag documentation
+issues, and that's expected behavior for a portfolio agent, not a bug.
 
 ## Known limitation: self-hosted runner required
 

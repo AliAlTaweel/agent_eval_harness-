@@ -4,6 +4,7 @@ from click.testing import CliRunner
 
 from harness.aggregator import AggregateReport
 from harness.cli import cli
+from harness.judge import FakeHallucinationJudge, JudgeVerdict
 
 
 def test_gate_command_passes_with_no_prior_history(tmp_path, monkeypatch):
@@ -121,9 +122,7 @@ def test_gate_clinical_review_command_passes_with_no_prior_history(tmp_path, mon
     monkeypatch.setattr("harness.cli._run_clinical_case", lambda note_text, encounter_type: fake_run_clinical_case(note_text, encounter_type))
     monkeypatch.setattr(
         "harness.cli.HallucinationJudge",
-        lambda *a, **k: type(
-            "J", (), {"judge": staticmethod(lambda **kw: __import__("harness.judge", fromlist=["JudgeVerdict"]).JudgeVerdict(hallucinated=False, reasoning=""))}
-        )(),
+        lambda *a, **k: FakeHallucinationJudge(response=JudgeVerdict(hallucinated=False, reasoning="")),
     )
 
     runner = CliRunner()

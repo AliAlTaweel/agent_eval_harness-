@@ -1,12 +1,12 @@
 [
   {
-    "commit_sha": "6872b67af5345c9123f70a1032faee53220a3824",
-    "timestamp": "2026-09-04T18:00:59.179178+00:00",
+    "commit_sha": "2f3b07a3e06ea9ff68ce9b3f721ae6c36dd1da90",
+    "timestamp": "2026-09-04T18:15:10.615401+00:00",
     "report": {
       "pass_rate": 0.5,
-      "avg_hallucination_rate": 0.47916666666666663,
+      "avg_hallucination_rate": 0.625,
       "avg_cost_usd": 0.0,
-      "avg_latency_seconds": 16.99696425,
+      "avg_latency_seconds": 13.6932245,
       "total_cases": 4
     }
   }

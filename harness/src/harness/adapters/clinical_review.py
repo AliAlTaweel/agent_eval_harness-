@@ -48,15 +48,20 @@ class ClinicalReviewScorer:
             len(expected_agents & actual_agents) / len(expected_agents) if expected_agents else 1.0
         )
 
+        # Completeness findings are absence-claims ("Review of Systems is not
+        # documented") that a grounding judge cannot meaningfully verify
+        # against source text, so only compliance and coding-clarity issues
+        # (which assert something is present/wrong in the note) are judged.
+        # This mirrors PrReviewScorer, which judges only security_issues.
         note_text = (trace.input or {}).get("note_text", "")
-        all_issues = completeness_issues + compliance_issues + coding_clarity_issues
-        if all_issues:
+        judged_issues = compliance_issues + coding_clarity_issues
+        if judged_issues:
             hallucinated_count = 0
-            for issue in all_issues:
+            for issue in judged_issues:
                 verdict = self._judge.judge(source_material=note_text, claim=issue.get("description", ""))
                 if verdict.hallucinated:
                     hallucinated_count += 1
-            hallucination_rate = hallucinated_count / len(all_issues)
+            hallucination_rate = hallucinated_count / len(judged_issues)
         else:
             hallucination_rate = 0.0
 

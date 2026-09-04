@@ -35,11 +35,9 @@ def merge_findings(
 ) -> Verdict:
     summary = _summarize(completeness, compliance, coding_clarity)
 
-    def call():
-        parsed, usage = client.chat(system=SYSTEM_PROMPT, user=summary, response_model=Verdict)
-        return parsed, usage
-
-    llm_verdict: Verdict = recorder.record("merge", "decide_verdict", call)
+    llm_verdict: Verdict = recorder.record(
+        "merge", "decide_verdict", lambda: client.chat(system=SYSTEM_PROMPT, user=summary, response_model=Verdict)
+    )
 
     return Verdict(
         completeness_issues=completeness.issues,

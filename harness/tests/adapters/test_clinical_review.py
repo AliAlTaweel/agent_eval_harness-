@@ -113,11 +113,11 @@ def test_tool_call_correctness_partial_when_agent_missing():
     assert result.tool_call_correctness == 0.5
 
 
-def test_hallucination_rate_uses_judge_across_all_issue_types():
+def test_hallucination_rate_uses_judge_across_compliance_and_coding_clarity_issues():
     trace = _trace(
         "needs_revision",
-        [{"element": "ROS", "description": "fabricated gap", "severity": "medium"}],
         [],
+        [{"element": "Compliance", "description": "fabricated compliance gap", "severity": "medium"}],
         ["completeness_review", "compliance_review", "coding_clarity_review", "merge"],
     )
     expected = ClinicalReviewExpected(
@@ -130,6 +130,25 @@ def test_hallucination_rate_uses_judge_across_all_issue_types():
     result = scorer.score(trace, expected)
 
     assert result.hallucination_rate == 1.0
+
+
+def test_hallucination_rate_ignores_completeness_issues():
+    trace = _trace(
+        "needs_revision",
+        [{"element": "ROS", "description": "fabricated gap", "severity": "medium"}],
+        [],
+        ["completeness_review", "compliance_review", "coding_clarity_review", "merge"],
+    )
+    expected = ClinicalReviewExpected(
+        verdict="needs_revision",
+        expected_check_agents=["completeness_review", "compliance_review", "coding_clarity_review", "merge"],
+    )
+    judge = FakeHallucinationJudge(response=JudgeVerdict(hallucinated=True, reasoning="always hallucinated"))
+    scorer = ClinicalReviewScorer(judge=judge)
+
+    result = scorer.score(trace, expected)
+
+    assert result.hallucination_rate == 0.0
 
 
 def test_hallucination_rate_zero_when_no_issues_reported():
