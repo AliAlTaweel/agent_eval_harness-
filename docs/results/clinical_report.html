@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><title>Eval Report</title></head>
+<body>
+  <h1>Eval Harness Report</h1>
+  <h2>Current Run</h2>
+  <table border="1" cellpadding="4">
+    <tr><th>Pass rate</th><td>0.5</td></tr>
+    <tr><th>Avg hallucination rate</th><td>0.47916666666666663</td></tr>
+    <tr><th>Avg cost (USD)</th><td>0.0</td></tr>
+    <tr><th>Avg latency (s)</th><td>16.99696425</td></tr>
+    <tr><th>Total cases</th><td>4</td></tr>
+  </table>
+
+  
+  <h2>Per-Case Results</h2>
+  <table border="1" cellpadding="4">
+    <tr><th>Case</th><th>Result</th><th>Hallucination rate</th><th>Latency (s)</th></tr>
+    
+    <tr>
+      <td>clean_follow_up</td>
+      <td>fail</td>
+      <td>1.0</td>
+      <td>16.700278</td>
+    </tr>
+    
+    <tr>
+      <td>clean_new_patient</td>
+      <td>fail</td>
+      <td>0.0</td>
+      <td>15.807138</td>
+    </tr>
+    
+    <tr>
+      <td>incomplete_new_patient</td>
+      <td>pass</td>
+      <td>0.25</td>
+      <td>13.773016</td>
+    </tr>
+    
+    <tr>
+      <td>mismatched_follow_up</td>
+      <td>pass</td>
+      <td>0.6666666666666666</td>
+      <td>21.707425</td>
+    </tr>
+    
+  </table>
+  
+
+  <h2>Trend</h2>
+  
+  <table border="1" cellpadding="4">
+    <tr><th>Commit</th><th>Timestamp</th><th>Pass rate</th><th>Hallucination rate</th></tr>
+    
+    <tr>
+      <td>6872b67af5345c9123f70a1032faee53220a3824</td>
+      <td>2026-09-04T18:00:59.179178+00:00</td>
+      <td>0.5</td>
+      <td>0.47916666666666663</td>
+    </tr>
+    
+  </table>
+  
+</body>
+</html>

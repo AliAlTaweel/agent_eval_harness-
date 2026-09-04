@@ -104,6 +104,39 @@ check since there's no expected verdict to score against) or pick one of the
 `expected.json`). Lives in `harness/` rather than `agent/` since it depends on
 both packages, matching the one-directional dependency `harness -> agent`.
 
+### Clinical documentation review agent (`clinical_review/`)
+
+A second, independent agent proving the `trace_schema`/`harness` design
+generalizes across domains without modification. Reviews a clinical note's
+*documentation quality* — completeness, compliance, coding clarity — not
+its medical correctness.
+
+**This is an illustrative portfolio demo, not a clinical tool.** Its review
+rules are example documentation-quality checks, not a real coding/compliance
+authority, and it must never be used for actual patient care or clinical
+decision-making.
+
+```bash
+uv run clinical-review review --note-file <path> --encounter-type {new_patient,follow_up}
+```
+
+Streamlit UI:
+```bash
+uv sync --extra ui
+uv run streamlit run clinical_review/src/clinical_review/streamlit_app.py
+```
+
+Eval harness (separate from the PR-review gate — a different domain's pass
+rate is a different number):
+```bash
+uv run harness gate-clinical-review --testcases-dir clinical_testcases \
+  --history-path docs/results/clinical_history.json \
+  --report-out docs/results/clinical_report.html --commit-sha "$(git rev-parse HEAD)"
+```
+
+See `docs/results/clinical_report.html` for an example of the harness's
+output on this second domain.
+
 ## Known limitation: self-hosted runner required
 
 `.github/workflows/pr-review.yml` and `.github/workflows/eval-gate.yml` both 
