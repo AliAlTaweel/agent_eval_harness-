@@ -18,6 +18,53 @@ This repo currently contains:
   swapping in a different agent means writing a new adapter, while the 
   harness core remains unchanged.
 
+## Structure
+
+```mermaid
+flowchart TB
+    subgraph trace["trace_schema/ (shared contract)"]
+        RunTrace["RunTrace / Step / ToolCall\n(pydantic models)"]
+    end
+
+    subgraph agentPkg["agent/ — LangGraph PR reviewer"]
+        direction TB
+        Diff["PR diff"] --> Graph["StateGraph"]
+        Graph --> Sec["security-review node"]
+        Graph --> Style["style-review node"]
+        Graph --> Cov["test-coverage node"]
+        Sec --> Merge["merge / critic node"]
+        Style --> Merge
+        Cov --> Merge
+        Merge --> Verdict["Verdict JSON +\nmarkdown PR comment"]
+        Merge -.records.-> AgentTrace["RunTrace"]
+    end
+
+    subgraph harnessPkg["harness/ — agent-agnostic eval harness"]
+        direction TB
+        Collector["collector\n(load_trace)"] --> Scorer["Scorer protocol"]
+        Scorer --> Adapter["adapters/pr_review.py\n(PR-review-specific scoring)"]
+        Scorer --> Judge["LLM-as-judge\n(hallucination check)"]
+        Adapter --> Aggregate["aggregator + history"]
+        Judge --> Aggregate
+        Aggregate --> Gate["pass/fail gate"]
+        Aggregate --> Report["HTML report"]
+    end
+
+    RunTrace -.contract.-> AgentTrace
+    RunTrace -.contract.-> Collector
+    AgentTrace ==agent CLI / testcases==> Collector
+
+    CI1["pr-review.yml\n(self-hosted runner)"] --> agentPkg
+    CI2["eval-gate.yml\n(self-hosted runner)"] --> harnessPkg
+```
+
+`agent/` and `harness/` never import from each other's internals — the only
+shared dependency is `trace_schema`, and the only integration point is
+`harness/cli.py` invoking the agent's public `run_review()` entry point to
+produce traces for scoring. `harness/streamlit_app.py` is a second such
+integration point — a UI that runs the agent, then scores the resulting
+trace with the harness (see "Streamlit UI" below).
+
 ## Running locally
 
 ```bash
@@ -42,6 +89,20 @@ uv run harness gate --testcases-dir testcases --history-path history.json \
 
 This runs the harness against the synthetic test suite and produces an HTML 
 report. See `docs/results/report.html` for an example of the harness's output.
+
+### Streamlit UI
+
+```bash
+uv sync --extra ui
+uv run streamlit run harness/src/harness/streamlit_app.py
+```
+
+Lets you either upload your own diff (runs the agent, then a hallucination-only
+check since there's no expected verdict to score against) or pick one of the
+`testcases/` scenarios (runs the agent, then the full harness score —
+`task_success`, `tool_call_correctness`, `hallucination_rate` — against its
+`expected.json`). Lives in `harness/` rather than `agent/` since it depends on
+both packages, matching the one-directional dependency `harness -> agent`.
 
 ## Known limitation: self-hosted runner required
 

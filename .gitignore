@@ -10,3 +10,4 @@ trace.json
 comment.md
 /history.json
 /report.html
+.DS_Store
