@@ -11,3 +11,8 @@ comment.md
 /history.json
 /report.html
 .DS_Store
+*.patch
+*.diff
+*.diff.txt
+*.patch.txt
+*.txt
