@@ -1,0 +1,4 @@
+{
+  "encounter_type": "new_patient",
+  "note_text": "CHIEF COMPLAINT: Sore throat and low-grade fever for 3 days.\n\nHISTORY OF PRESENT ILLNESS: 29-year-old presents with a 3-day history of sore throat, low-grade fever, and mild difficulty swallowing. Denies cough or shortness of breath.\n\nREVIEW OF SYSTEMS: Negative for cough, chest pain, rash, or joint pain. Positive for sore throat and fatigue.\n\nPAST MEDICAL HISTORY: No chronic conditions. No prior surgeries.\n\nVITALS: BP 118/74, HR 82, Temp 100.2F, RR 14, SpO2 99% on room air.\n\nPHYSICAL EXAM: Oropharynx erythematous with mild tonsillar swelling, no exudate. No cervical lymphadenopathy. Lungs clear to auscultation bilaterally.\n\nASSESSMENT: Acute pharyngitis, likely viral.\n\nPLAN: Supportive care with fluids and rest. Return if symptoms worsen or fever persists beyond 5 days."
+}
