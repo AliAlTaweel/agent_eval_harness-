@@ -13,6 +13,7 @@ resolution-markers = [
 [manifest]
 members = [
     "agent",
+    "clinical-review",
     "harness",
     "trace-schema",
 ]
@@ -243,6 +244,44 @@ sdist = { url = "https://files.pythonhosted.org/packages/c7/0e/7fa0ef50764b67090
 wheels = [
     { url = "https://files.pythonhosted.org/packages/58/50/6c0d534c5f134586a8e1ba4e330569e32f057e33372ae556463212fb4cd3/click-8.5.0-py3-none-any.whl", hash = "sha256:255bc9599cf7748b4b1a446ccc735421bd08a2ae529a8b88597d3de5664ee360", size = 125251, upload-time = "2026-08-26T13:33:12.928Z" },
 ]
+
+[[package]]
+name = "clinical-review"
+version = "0.1.0"
+source = { editable = "clinical_review" }
+dependencies = [
+    { name = "click" },
+    { name = "jinja2" },
+    { name = "langgraph" },
+    { name = "ollama" },
+    { name = "pydantic" },
+    { name = "trace-schema" },
+]
+
+[package.optional-dependencies]
+ui = [
+    { name = "streamlit" },
+]
+
+[package.dev-dependencies]
+dev = [
+    { name = "pytest" },
+]
+
+[package.metadata]
+requires-dist = [
+    { name = "click", specifier = ">=8.1" },
+    { name = "jinja2", specifier = ">=3.1" },
+    { name = "langgraph", specifier = ">=0.2" },
+    { name = "ollama", specifier = ">=0.3" },
+    { name = "pydantic", specifier = ">=2.6" },
+    { name = "streamlit", marker = "extra == 'ui'", specifier = ">=1.38" },
+    { name = "trace-schema", editable = "trace_schema" },
+]
+provides-extras = ["ui"]
+
+[package.metadata.requires-dev]
+dev = [{ name = "pytest", specifier = ">=8.0" }]
 
 [[package]]
 name = "colorama"
