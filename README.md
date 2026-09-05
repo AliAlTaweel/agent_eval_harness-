@@ -76,9 +76,9 @@ uv run agent review --diff-file <path-to-diff-file>
 This writes `trace.json` (a `RunTrace`) and `comment.md` (the PR comment) to
 the current directory by default; override with `--trace-out` /
 `--comment-out`. Run `uv run pytest` from the repo root to run the full test
-suite across `trace_schema/tests/` and `agent/tests/` (pass
-`-m "not integration"` to skip the test that requires a running local
-Ollama).
+suite across `trace_schema/tests/`, `agent/tests/`, `harness/tests/`, and
+`clinical_review/tests/` (pass `-m "not integration"` to skip the tests that
+require a running local Ollama).
 
 ### Running the eval harness
 
