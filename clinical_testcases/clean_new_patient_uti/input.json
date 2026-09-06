@@ -1,0 +1,4 @@
+{
+  "encounter_type": "new_patient",
+  "note_text": "CHIEF COMPLAINT: Burning with urination and urinary frequency for 2 days.\n\nHISTORY OF PRESENT ILLNESS: 24-year-old presents with dysuria, urinary frequency, and mild suprapubic discomfort. Denies fever, flank pain, or vaginal discharge.\n\nREVIEW OF SYSTEMS: Positive for dysuria and frequency. Negative for fever, flank pain, vaginal discharge, hematuria.\n\nPAST MEDICAL HISTORY: No chronic conditions, no prior urinary tract infections.\n\nVITALS: BP 116/72, HR 74, Temp 98.4F, RR 14.\n\nPHYSICAL EXAM: Mild suprapubic tenderness, no costovertebral angle tenderness, no distress.\n\nASSESSMENT: Uncomplicated urinary tract infection.\n\nPLAN: Nitrofurantoin 5-day course, increased fluid intake, return if symptoms worsen or fever develops."
+}

@@ -1,7 +1,0 @@
---- a/app/config.py
-+++ b/app/config.py
-@@ -1,4 +1,5 @@
- import os
-
- API_KEY = os.environ.get("API_KEY")
-+STRIPE_SECRET_KEY = "REDACTED_FAKE_STRIPE_KEY_FOR_TESTING_NOT_REAL"

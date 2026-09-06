@@ -1,0 +1,11 @@
+{
+  "verdict": "needs_revision",
+  "expected_check_agents": [
+    "completeness_review",
+    "compliance_review",
+    "coding_clarity_review",
+    "merge"
+  ],
+  "min_completeness_issues": 0,
+  "min_compliance_issues": 1
+}

@@ -1,6 +1,0 @@
---- a/app/db.py
-+++ b/app/db.py
-@@ -10,7 +10,7 @@ class UserRepo:
-     def get_user(self, user_id):
--        return self.conn.execute("SELECT * FROM users WHERE id = ?", [user_id])
-+        return self.conn.execute(f"SELECT * FROM users WHERE id = {user_id}")

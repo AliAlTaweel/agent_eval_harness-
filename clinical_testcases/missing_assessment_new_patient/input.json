@@ -1,0 +1,4 @@
+{
+  "encounter_type": "new_patient",
+  "note_text": "CHIEF COMPLAINT: Headache for 3 days.\n\nHISTORY OF PRESENT ILLNESS: 31-year-old with bilateral, band-like headache, no aura, no vision changes. Denies trauma. Mild stress at work recently.\n\nREVIEW OF SYSTEMS: Negative for fever, neck stiffness, vision changes, weakness. Positive for headache.\n\nPAST MEDICAL HISTORY: No chronic conditions.\n\nVITALS: BP 118/76, HR 72, Temp 98.3F, RR 14.\n\nPHYSICAL EXAM: Neurological exam grossly intact, no focal deficits, no neck stiffness, no papilledema on fundoscopic exam.\n\nPLAN: OTC analgesics, hydration, stress management, return if headache worsens or new neuro symptoms develop."
+}

@@ -1,7 +1,7 @@
 [tool.uv.workspace]
-members = ["trace_schema", "agent", "harness", "clinical_review"]
+members = ["trace_schema", "harness", "clinical_review"]
 
 [tool.pytest.ini_options]
-testpaths = ["trace_schema/tests", "agent/tests", "harness/tests", "clinical_review/tests"]
+testpaths = ["trace_schema/tests", "harness/tests", "clinical_review/tests"]
 addopts = "--import-mode=importlib"
 markers = ["integration: requires a running local Ollama"]

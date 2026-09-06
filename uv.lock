@@ -12,42 +12,10 @@ resolution-markers = [
 
 [manifest]
 members = [
-    "agent",
     "clinical-review",
     "harness",
     "trace-schema",
 ]
-
-[[package]]
-name = "agent"
-version = "0.1.0"
-source = { editable = "agent" }
-dependencies = [
-    { name = "click" },
-    { name = "jinja2" },
-    { name = "langgraph" },
-    { name = "ollama" },
-    { name = "pydantic" },
-    { name = "trace-schema" },
-]
-
-[package.dev-dependencies]
-dev = [
-    { name = "pytest" },
-]
-
-[package.metadata]
-requires-dist = [
-    { name = "click", specifier = ">=8.1" },
-    { name = "jinja2", specifier = ">=3.1" },
-    { name = "langgraph", specifier = ">=0.2" },
-    { name = "ollama", specifier = ">=0.3" },
-    { name = "pydantic", specifier = ">=2.6" },
-    { name = "trace-schema", editable = "trace_schema" },
-]
-
-[package.metadata.requires-dev]
-dev = [{ name = "pytest", specifier = ">=8.0" }]
 
 [[package]]
 name = "altair"
@@ -322,11 +290,6 @@ dependencies = [
     { name = "trace-schema" },
 ]
 
-[package.optional-dependencies]
-ui = [
-    { name = "streamlit" },
-]
-
 [package.dev-dependencies]
 dev = [
     { name = "pytest" },
@@ -338,10 +301,8 @@ requires-dist = [
     { name = "jinja2", specifier = ">=3.1" },
     { name = "ollama", specifier = ">=0.3" },
     { name = "pydantic", specifier = ">=2.6" },
-    { name = "streamlit", marker = "extra == 'ui'", specifier = ">=1.38" },
     { name = "trace-schema", editable = "trace_schema" },
 ]
-provides-extras = ["ui"]
 
 [package.metadata.requires-dev]
 dev = [{ name = "pytest", specifier = ">=8.0" }]

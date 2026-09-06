@@ -5,11 +5,11 @@
   <h1>Eval Harness Report</h1>
   <h2>Current Run</h2>
   <table border="1" cellpadding="4">
-    <tr><th>Pass rate</th><td>0.5</td></tr>
-    <tr><th>Avg hallucination rate</th><td>0.625</td></tr>
+    <tr><th>Pass rate</th><td>0.76</td></tr>
+    <tr><th>Avg hallucination rate</th><td>0.7133333333333333</td></tr>
     <tr><th>Avg cost (USD)</th><td>0.0</td></tr>
-    <tr><th>Avg latency (s)</th><td>13.6932245</td></tr>
-    <tr><th>Total cases</th><td>4</td></tr>
+    <tr><th>Avg latency (s)</th><td>12.488133479999998</td></tr>
+    <tr><th>Total cases</th><td>25</td></tr>
   </table>
 
   
@@ -21,28 +21,175 @@
       <td>clean_follow_up</td>
       <td>fail</td>
       <td>1.0</td>
-      <td>10.629294</td>
+      <td>20.754526</td>
+    </tr>
+    
+    <tr>
+      <td>clean_follow_up_diabetes</td>
+      <td>fail</td>
+      <td>1.0</td>
+      <td>12.615247</td>
     </tr>
     
     <tr>
       <td>clean_new_patient</td>
       <td>fail</td>
+      <td>0.0</td>
+      <td>9.987585</td>
+    </tr>
+    
+    <tr>
+      <td>clean_new_patient_back_pain</td>
+      <td>fail</td>
+      <td>1.0</td>
+      <td>9.587876</td>
+    </tr>
+    
+    <tr>
+      <td>clean_new_patient_uti</td>
+      <td>fail</td>
       <td>0.5</td>
-      <td>20.023714</td>
+      <td>15.510398</td>
+    </tr>
+    
+    <tr>
+      <td>compliance_abnormal_no_vitals_follow_up</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>14.26346</td>
+    </tr>
+    
+    <tr>
+      <td>compliance_abnormal_no_vitals_new_patient</td>
+      <td>pass</td>
+      <td>0.5</td>
+      <td>13.376663</td>
+    </tr>
+    
+    <tr>
+      <td>compliance_unsupported_assessment_new_patient</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>15.156145</td>
+    </tr>
+    
+    <tr>
+      <td>compliance_unsupported_plan_follow_up</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>11.323793</td>
+    </tr>
+    
+    <tr>
+      <td>compound_incomplete_and_noncompliant_follow_up</td>
+      <td>fail</td>
+      <td>0.0</td>
+      <td>2.984204</td>
+    </tr>
+    
+    <tr>
+      <td>compound_incomplete_and_noncompliant_new_patient</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>14.078639</td>
     </tr>
     
     <tr>
       <td>incomplete_new_patient</td>
       <td>pass</td>
-      <td>0.0</td>
-      <td>9.543253</td>
+      <td>0.5</td>
+      <td>13.733653</td>
     </tr>
     
     <tr>
       <td>mismatched_follow_up</td>
       <td>pass</td>
       <td>1.0</td>
-      <td>14.576637</td>
+      <td>10.647008</td>
+    </tr>
+    
+    <tr>
+      <td>missing_assessment_follow_up</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>13.947594</td>
+    </tr>
+    
+    <tr>
+      <td>missing_assessment_new_patient</td>
+      <td>pass</td>
+      <td>0.3333333333333333</td>
+      <td>13.62595</td>
+    </tr>
+    
+    <tr>
+      <td>missing_cc_new_patient</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>18.123395</td>
+    </tr>
+    
+    <tr>
+      <td>missing_exam_follow_up</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>7.502285</td>
+    </tr>
+    
+    <tr>
+      <td>missing_exam_new_patient</td>
+      <td>pass</td>
+      <td>0.0</td>
+      <td>8.648974</td>
+    </tr>
+    
+    <tr>
+      <td>missing_hpi_new_patient</td>
+      <td>pass</td>
+      <td>0.5</td>
+      <td>13.582538</td>
+    </tr>
+    
+    <tr>
+      <td>missing_multiple_new_patient</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>10.672918</td>
+    </tr>
+    
+    <tr>
+      <td>missing_plan_follow_up</td>
+      <td>pass</td>
+      <td>0.0</td>
+      <td>8.19851</td>
+    </tr>
+    
+    <tr>
+      <td>missing_plan_new_patient</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>17.43527</td>
+    </tr>
+    
+    <tr>
+      <td>missing_reason_follow_up</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>7.310148</td>
+    </tr>
+    
+    <tr>
+      <td>missing_ros_new_patient</td>
+      <td>pass</td>
+      <td>0.5</td>
+      <td>12.574416</td>
+    </tr>
+    
+    <tr>
+      <td>severely_incomplete_new_patient</td>
+      <td>pass</td>
+      <td>1.0</td>
+      <td>16.562142</td>
     </tr>
     
   </table>
@@ -58,6 +205,13 @@
       <td>2026-09-04T18:15:10.615401+00:00</td>
       <td>0.5</td>
       <td>0.625</td>
+    </tr>
+    
+    <tr>
+      <td>855662ec19947b59d05c9786c41d7c091b868bf2</td>
+      <td>2026-09-06T07:40:12.198868+00:00</td>
+      <td>0.76</td>
+      <td>0.7133333333333333</td>
     </tr>
     
   </table>

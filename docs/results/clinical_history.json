@@ -9,5 +9,16 @@
       "avg_latency_seconds": 13.6932245,
       "total_cases": 4
     }
+  },
+  {
+    "commit_sha": "855662ec19947b59d05c9786c41d7c091b868bf2",
+    "timestamp": "2026-09-06T07:40:12.198868+00:00",
+    "report": {
+      "pass_rate": 0.76,
+      "avg_hallucination_rate": 0.7133333333333333,
+      "avg_cost_usd": 0.0,
+      "avg_latency_seconds": 12.488133479999998,
+      "total_cases": 25
+    }
   }
 ]

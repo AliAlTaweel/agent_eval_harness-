@@ -1,0 +1,4 @@
+{
+  "encounter_type": "new_patient",
+  "note_text": "CHIEF COMPLAINT: Mild fatigue for 1 week.\n\nHISTORY OF PRESENT ILLNESS: 38-year-old reports feeling more tired than usual over the past week, no other complaints. Sleep and appetite unchanged.\n\nREVIEW OF SYSTEMS: Positive for fatigue only. Negative for fever, weight change, chest pain.\n\nPAST MEDICAL HISTORY: No chronic conditions.\n\nVITALS: BP 118/74, HR 72, Temp 98.2F, RR 14.\n\nPHYSICAL EXAM: Well-appearing, no pallor, no lymphadenopathy, heart and lungs normal.\n\nASSESSMENT: Iron deficiency anemia.\n\nPLAN: Start iron supplementation, recheck CBC in 6 weeks, follow up after labs."
+}
